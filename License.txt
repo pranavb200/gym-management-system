@@ -1,0 +1,33 @@
+
+---
+
+## 🟢 3. GitHub: From Zero
+
+1. **Create an Account**  
+   Go to [github.com](https://github.com) → Sign Up.
+
+2. **Install Git**  
+   - [Download Git](https://git-scm.com/downloads)
+   - During install, keep defaults.
+
+3. **Initialise Repo Locally**
+   ```bash
+   cd path/to/gym-management-system
+   git init
+   git add .
+   git commit -m "Initial commit"
+
+ 4. Create Repo Online
+ On GitHub, click New Repository.
+ Name: gym-management-system
+ Keep it Public, no template.
+
+ 5. Link & Push
+
+ git remote add origin https://github.com/<your-username>/gym-management-system.git
+ git branch -M main
+ git push -u origin main
+
+
+Your code is now public at
+https://github.com/<your-username>/gym-management-system

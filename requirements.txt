@@ -1,0 +1,8 @@
+Flask
+gunicorn
+itsdangerous
+Jinja2
+Werkzeug
+click
+mysql-connector-python
+

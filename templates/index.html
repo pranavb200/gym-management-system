@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <h1>Welcome to FITHUB </h1>
+    <p>Manage your workouts, payments, and more in one place</p>
+    <div class="cta-buttons">
+        <a href="{{ url_for('register') }}" class="btn btn-primary">Join Now</a>
+        <a href="{{ url_for('login') }}" class="btn btn-secondary">Member Login</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <h3>Workout Scheduling</h3>
+        <p>Book sessions with our professional trainers</p>
+    </div>
+    <div class="feature">
+        <h3>Payment Management</h3>
+        <p>Easy and secure payment processing</p>
+    </div>
+    <div class="feature">
+        <h3>Progress Tracking</h3>
+        <p>Monitor your fitness journey</p>
+    </div>
+</section>
+{% endblock %}
