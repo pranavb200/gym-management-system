@@ -5,4 +5,4 @@ Jinja2
 Werkzeug
 click
 mysql-connector-python
-
+cx_Oracle
