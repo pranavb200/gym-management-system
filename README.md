@@ -3,12 +3,12 @@
 
 ## 📘 Project Description
 The **Gym Management System** is a database-driven web application that allows gym administrators to manage members, trainers, workout plans, attendance, and payments efficiently.  
-It is built using **Oracle Database** as the backend and **Flask (Python)** for the web interface. The system demonstrates database concepts such as **Views**, **Stored Procedures**, **Triggers**, **Transactions**, and **Normalization (up to 3NF)**.
+It is built using **Postgre SQL** as the backend and **Flask (Python)** for the web interface. The system demonstrates database concepts such as **Views**, **Stored Procedures**, **Triggers**, **Transactions**, and **Normalization (up to 3NF)**.
 
 ---
 
 ## 🧠 Skills Used
-- SQL (Oracle)
+- SQL (Postgres)
 - Database Design (ER Model, Normalization till 3NF)
 - Flask (Python Web Framework)
 - HTML, CSS, JavaScript (Frontend)
@@ -123,4 +123,4 @@ GitHub: [https://github.com/pranavb200](https://github.com/pranavb200)
 ---
 
 ## 🏁 Conclusion
-This project demonstrates database-driven web development integrating **Oracle SQL**, **Flask**, and **HTML/CSS** to create a real-world **Gym Management System** that fulfills academic DBMS requirements and can be deployed publicly.
+This project demonstrates database-driven web development integrating **Postgres SQL**, **Flask**, and **HTML/CSS** to create a real-world **Gym Management System** that fulfills academic DBMS requirements and can be deployed publicly.
