@@ -103,7 +103,7 @@ python app.py
 ```
 
 Then open in browser:  
-👉 http://127.0.0.1:5000/
+👉 (https://gym-management-system-vagf.onrender.com)
 
 ---
 
