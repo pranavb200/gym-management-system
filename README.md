@@ -38,7 +38,7 @@ It is built using **Postgre SQL** as the backend and **Flask (Python)** for the 
 
 ---
 
-## 🧩 Database Components (Oracle)
+## 🧩 Database Components
 - **3 Views**  
   Example: Member Attendance, Payment History, Active Trainers
 
