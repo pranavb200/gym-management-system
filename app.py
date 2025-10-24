@@ -1,27 +1,27 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from config import Config
-import psycopg2
 from datetime import datetime
+import psycopg2
 import os
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.secret_key = os.getenv("SECRET_KEY", "default_secret_key")
 
 # -------------------------------------------------
-# Database connection helper
+# Database connection helper (Supabase PostgreSQL)
 # -------------------------------------------------
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            host=app.config["PG_HOST"],
-            port=app.config["PG_PORT"],
-            user=app.config["PG_USER"],
-            password=app.config["PG_PASSWORD"],
-            dbname=app.config["PG_DB"]
+            host=os.getenv("PG_HOST"),
+            port=os.getenv("PG_PORT"),
+            user=os.getenv("PG_USER"),
+            password=os.getenv("PG_PASSWORD"),
+            dbname=os.getenv("PG_DB"),
+            sslmode="require"  # ✅ Required for Supabase
         )
         return conn
     except psycopg2.Error as e:
-        print("Database connection error:", e)
+        print("❌ Database connection error:", e)
         return None
 
 # -------------------------------------------------
@@ -47,13 +47,12 @@ def register():
             try:
                 cur = conn.cursor()
                 cur.execute("""
-                    INSERT INTO members
-                    (username, password, full_name, email, phone, membership_type)
+                    INSERT INTO members (username, password, full_name, email, phone, membership_type)
                     VALUES (%s, %s, %s, %s, %s, %s)
                     RETURNING member_id
                 """, (username, password, full_name, email, phone, membership_type))
                 conn.commit()
-                flash('Registration successful! Please login.', 'success')
+                flash('✅ Registration successful! Please login.', 'success')
                 return redirect(url_for('login'))
             except psycopg2.Error as e:
                 flash(f'Registration failed: {e.pgerror}', 'danger')
@@ -62,7 +61,6 @@ def register():
                 conn.close()
         else:
             flash('Database connection error', 'danger')
-
     return render_template('register.html')
 
 # ------------------- Login -----------------------
@@ -87,7 +85,7 @@ def login():
                     session['member_id'] = member[0]
                     session['username']  = member[1]
                     session['full_name'] = member[2]
-                    flash('Login successful!', 'success')
+                    flash('✅ Login successful!', 'success')
                     return redirect(url_for('dashboard'))
                 else:
                     flash('Invalid username or password', 'danger')
@@ -115,8 +113,7 @@ def dashboard():
             # Member details
             cur.execute("""
                 SELECT full_name, email, phone, membership_type, status
-                FROM members
-                WHERE member_id = %s
+                FROM members WHERE member_id = %s
             """, (session['member_id'],))
             member_details = cur.fetchone()
 
@@ -133,8 +130,7 @@ def dashboard():
             # Payment history
             cur.execute("""
                 SELECT payment_date, amount, payment_method, status
-                FROM payments
-                WHERE member_id = %s
+                FROM payments WHERE member_id = %s
                 ORDER BY payment_date DESC
             """, (session['member_id'],))
             payment_history = cur.fetchall()
@@ -173,30 +169,22 @@ def schedule():
 
         if request.method == 'POST':
             trainer_id  = request.form['trainer_id']
-            session_date = request.form['session_date']  # YYYY-MM-DD
-            start_time   = request.form['start_time']   # HH:MM
-            end_time     = request.form['end_time']     # HH:MM
+            session_date = request.form['session_date']
+            start_time   = request.form['start_time']
+            end_time     = request.form['end_time']
 
-            # ✅ combine date + time -> full timestamp
             start_ts = f"{session_date} {start_time}:00"
             end_ts   = f"{session_date} {end_time}:00"
 
             cur.execute("""
-                INSERT INTO workout_sessions
-                (member_id, trainer_id, session_date, start_time, end_time)
+                INSERT INTO workout_sessions (member_id, trainer_id, session_date, start_time, end_time)
                 VALUES (%s, %s, %s, %s, %s)
             """, (session['member_id'], trainer_id, session_date, start_ts, end_ts))
-
             conn.commit()
-            flash('Session scheduled successfully!', 'success')
+            flash('✅ Session scheduled successfully!', 'success')
             return redirect(url_for('dashboard'))
 
-        return render_template(
-            'schedule.html',
-            trainers=trainers,
-            min_date=datetime.now().strftime('%Y-%m-%d')
-        )
-
+        return render_template('schedule.html', trainers=trainers, min_date=datetime.now().strftime('%Y-%m-%d'))
     except psycopg2.Error as e:
         flash(f'Scheduling failed: {e.pgerror}', 'danger')
         return redirect(url_for('dashboard'))
@@ -220,12 +208,11 @@ def make_payment():
             try:
                 cur = conn.cursor()
                 cur.execute("""
-                    INSERT INTO payments
-                    (member_id, amount, payment_method, transaction_id)
+                    INSERT INTO payments (member_id, amount, payment_method, transaction_id)
                     VALUES (%s, %s, %s, %s)
                 """, (session['member_id'], amount, payment_method, transaction_id))
                 conn.commit()
-                flash('Payment processed successfully!', 'success')
+                flash('💳 Payment processed successfully!', 'success')
                 return redirect(url_for('dashboard'))
             except psycopg2.Error as e:
                 flash(f'Payment failed: {e.pgerror}', 'danger')
@@ -246,5 +233,4 @@ def logout():
 
 # -------------------------------------------------
 if __name__ == '__main__':
-    # 0.0.0.0 makes it visible when deployed; port 5000 by default
     app.run(host='0.0.0.0', port=int(os.getenv("PORT", 5000)), debug=True)
