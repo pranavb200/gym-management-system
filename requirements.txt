@@ -1,11 +1,7 @@
 Flask
 gunicorn
+psycopg2-binary
 itsdangerous
 Jinja2
 Werkzeug
 click
-mysql-connector-python
-psycopg2-binary
-
-
-
