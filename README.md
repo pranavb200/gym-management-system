@@ -2,125 +2,139 @@
 # 🏋️‍♂️ Gym Management System
 
 ## 📘 Project Description
-The **Gym Management System** is a database-driven web application that allows gym administrators to manage members, trainers, workout plans, attendance, and payments efficiently.  
-It is built using **Postgre SQL** as the backend and **Flask (Python)** for the web interface. The system demonstrates database concepts such as **Views**, **Stored Procedures**, **Triggers**, **Transactions**, and **Normalization (up to 3NF)**.
+The **Gym Management System** is a database-driven web application designed to help gym administrators and members manage registrations, trainers, workout sessions, payments, and attendance.  
+Built using **Flask (Python)** and **Supabase PostgreSQL**, it provides a seamless experience for managing gym operations both locally and online.
+
+---
+
+## 🌐 Live Deployment
+🚀 **Live App:** [https://gym-management-system-v9ws.onrender.com](https://gym-management-system-v9ws.onrender.com)
+
+Hosted on **Render** (Flask web service) with a **Supabase PostgreSQL** backend for persistent, secure, and free cloud-based database storage.
 
 ---
 
 ## 🧠 Skills Used
-- SQL (Postgres)
-- Database Design (ER Model, Normalization till 3NF)
-- Flask (Python Web Framework)
-- HTML, CSS, JavaScript (Frontend)
-- SQLAlchemy (Database connection)
-- Render / GitHub Deployment
-- Environment Variables Configuration
+- Python (Flask Framework)
+- HTML, CSS, JavaScript
+- PostgreSQL (Supabase Cloud Database)
+- psycopg2 (Database Connector)
+- Git & GitHub for Version Control
+- Render for Web Deployment
+- Environment Variable Configuration
 
 ---
 
-## ⚙️ Project Modules
-1. **Member Management**
-   - Add, Update, Delete, and View Members
-   - Attendance Tracking
-
-2. **Trainer Management**
-   - Assign trainers to members
-   - Manage trainer schedules
-
-3. **Workout & Plans**
-   - Maintain workout plans and schedules
-
-4. **Payments**
-   - Record payments and generate reports
-
-5. **Reports & Dashboard**
-   - Views for member details, payment history, and attendance summary
+## 🧩 Features
+- Member Registration and Login
+- Trainer Management
+- Schedule Workout Sessions
+- Track Payments
+- Member Dashboard with Session and Payment History
+- Persistent Cloud Database (Supabase PostgreSQL)
+- Secure Authentication System (Session-based)
+- Hosted Flask Web App on Render (Free Tier)
 
 ---
 
-## 🧩 Database Components
-- **3 Views**  
-  Example: Member Attendance, Payment History, Active Trainers
-
-- **3 Stored Procedures**  
-  Example: Add Member, Update Payment, Assign Trainer
-
-- **3 Triggers**  
-  Example: Auto-update member status, log payment insertions, attendance tracking
-
-- **Transactions**  
-  Used for consistent operations like new member registration with payment
-
----
-
-## 🗂️ Folder Structure
+## ⚙️ Folder Structure
 ```
-Gym_Management_System/
+gym-management-system/
 │
-├── app.py
-├── templates/
+├── app.py                # Main Flask Application
+├── templates/            # HTML Templates
 │   ├── index.html
-│   ├── add_member.html
-│   ├── trainer.html
+│   ├── register.html
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── schedule.html
 │   └── payments.html
 │
-├── static/
+├── static/               # CSS / JS Files
 │   ├── style.css
-│   └── script.js
 │
-├── requirements.txt
-└── README.md
+├── requirements.txt      # Python Dependencies
+└── README.md             # Project Documentation
 ```
 
 ---
 
-## 🚀 How to Run Locally
+## 🧱 Database (Supabase PostgreSQL)
+Supabase provides a free and permanent **PostgreSQL** instance.  
+The Gym Management System uses the following schema (simplified view):
 
-### 1️⃣ Setup Virtual Environment
+### Tables
+- **members** (member_id, username, password, full_name, email, phone, membership_type, status)
+- **trainers** (trainer_id, full_name, specialization)
+- **workout_sessions** (session_id, member_id, trainer_id, session_date, start_time, end_time)
+- **payments** (payment_id, member_id, amount, payment_method, payment_date, transaction_id, status)
+
+### Stored Procedures / Triggers
+- Automatic status updates on member registration
+- Session scheduling validation
+- Payment transaction logging
+
+---
+
+## 🔑 Environment Variables (Render + Supabase)
+Set these in **Render → Environment Tab**:
+
+| Key | Description | Example |
+|-----|--------------|----------|
+| `PG_HOST` | Supabase Hostname | db.dithtrecrdlsgcwowqny.supabase.co |
+| `PG_PORT` | PostgreSQL Port | 5432 |
+| `PG_USER` | PostgreSQL Username | postgres |
+| `PG_PASSWORD` | Supabase Database Password | your_db_password |
+| `PG_DB` | Database Name | postgres |
+| `SECRET_KEY` | Flask Session Key | mysecret123 |
+
+---
+
+## 🚀 Deployment Guide
+### 1️⃣ Push to GitHub
+```bash
+git add .
+git commit -m "Final Supabase integration"
+git push origin main
+```
+
+### 2️⃣ Deploy on Render
+1. Go to [Render](https://render.com)
+2. Click **New → Web Service**
+3. Connect your GitHub repository
+4. Set build command:
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. Set start command:
+   ```bash
+   python app.py
+   ```
+6. Add Supabase environment variables (as above)
+7. Deploy 🎉
+
+---
+
+## 💻 Run Locally
 ```bash
 python -m venv venv
-venv\Scriptsctivate   # For Windows
-source venv/bin/activate  # For Mac/Linux
-```
+venv\Scripts\activate  # (Windows)
+source venv/bin/activate # (Mac/Linux)
 
-### 2️⃣ Install Dependencies
-```bash
 pip install -r requirements.txt
-```
-
-### 3️⃣ Configure Environment Variables
-Create a `.env` file in the project root:
-```
-DB_USER=your_oracle_username
-DB_PASSWORD=your_oracle_password
-DB_DSN=your_oracle_dsn
-```
-If you are not using `.env`, update `app.py` with your credentials directly.
-
-### 4️⃣ Run Flask App
-```bash
 python app.py
 ```
-
-Then open in browser:  
-👉 (https://gym-management-system-vagf.onrender.com)
-
----
-
-## ☁️ Deployment Guide (Render / GitHub)
-
-1. Push project to **GitHub Repository**
-2. Connect repository to **Render.com**
-3. Add Environment Variables under “Environment” section in Render
-4. Deploy the web service — your project will be live with a public link!
+Then open → [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
 ## 👨‍💻 Author
 **Pranav B**  
-GitHub: [https://github.com/pranavb200](https://github.com/pranavb200)
+GitHub: [https://github.com/pranavb200](https://github.com/pranavb200)  
+Live App: [https://gym-management-system-v9ws.onrender.com](https://gym-management-system-v9ws.onrender.com)
 
 ---
 
 ## 🏁 Conclusion
-This project demonstrates database-driven web development integrating **Postgres SQL**, **Flask**, and **HTML/CSS** to create a real-world **Gym Management System** that fulfills academic DBMS requirements and can be deployed publicly.
+This project demonstrates how to build a modern, full-stack **Gym Management System** using Flask and Supabase.  
+It integrates authentication, scheduling, and payment management with a cloud database backend, deployed permanently for free on Render.
