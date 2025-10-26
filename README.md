@@ -81,12 +81,12 @@ Set these in **Render → Environment Tab**:
 
 | Key | Description | Example |
 |-----|--------------|----------|
-| `PG_HOST` | Supabase Hostname | db.dithtrecrdlsgcwowqny.supabase.co |
+| `PG_HOST` | Supabase Hostname | your host name |
 | `PG_PORT` | PostgreSQL Port | 5432 |
-| `PG_USER` | PostgreSQL Username | postgres |
+| `PG_USER` | PostgreSQL Username | your username |
 | `PG_PASSWORD` | Supabase Database Password | your_db_password |
 | `PG_DB` | Database Name | postgres |
-| `SECRET_KEY` | Flask Session Key | mysecret123 |
+| `SECRET_KEY` | Flask Session Key | your secret key |
 
 ---
 
@@ -124,9 +124,6 @@ source venv/bin/activate # (Mac/Linux)
 pip install -r requirements.txt
 python app.py
 ```
-Then open → [http://127.0.0.1:5000](http://127.0.0.1:5000)
-
----
 
 ## 👨‍💻 Author
 **Pranav B**  
